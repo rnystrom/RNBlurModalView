@@ -3,6 +3,8 @@ RNBlueModalView
 
 RNBlurModal adds *depth* to the traditional modal/alert view. Calling the view is incredibly similar to setting up and showing a UIAlertView. You can also setup your own custom views and display them with a blurry background. The goal is to truly draw the user's focus directly to your alert using natural effects.
 
+<img src="https://github.com/rnystrom/RNBlurModalView/raw/master/images/image.jpg" />
+
 ## Installation
 
 Super simple. Just drag & drop RNBlurModalView.h/.m into your project. In your Project, find the Build Phases tab and expand Link Binary With Libraries. Add the following frameworks to your project: 
