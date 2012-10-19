@@ -49,6 +49,23 @@ For brevity, you can instead set these properties in the <code>show:</code> and 
 - (void)hideWithDuration:(CGFloat)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options completion:(void (^)(void))completion;
 ```
 
+## KVO & Notifications
+
+As always, I try to include some helpers in case there are other objects that need to be notified of custom events.
+
+##### NSNotifications
+
+``` objective-c
+extern NSString * const kRNBlurDidShowNotification;
+extern NSString * const kRNBlurDidHidewNotification;
+```
+
+##### KVO
+
+``` objective-c
+@property (assign, readonly) BOOL isVisible;
+```
+
 ## Contact
 
 * [@nystrorm](https://twitter.com/nystrorm) on Twitter
