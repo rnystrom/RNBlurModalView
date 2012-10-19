@@ -24,9 +24,26 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@interface RNAppDelegate : UIResponder <UIApplicationDelegate>
+extern NSString * const kRNBlurDidShowNotification;
+extern NSString * const kRNBlurDidHidewNotification;
 
-@property (strong, nonatomic) UIWindow *window;
+@interface RNBlurModalView : UIView
+
+@property (assign, readonly) BOOL isVisible;
+
+@property (assign) CGFloat animationDuration;
+@property (assign) CGFloat animationDelay;
+@property (assign) UIViewAnimationOptions animationOptions;
+
+- (id)initWithViewController:(UIViewController*)viewController view:(UIView*)view;
+- (id)initWithViewController:(UIViewController*)viewController title:(NSString*)title message:(NSString*)message;
+
+- (void)show;
+- (void)showWithDuration:(CGFloat)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options completion:(void (^)(void))completion;
+
+- (void)hide;
+- (void)hideWithDuration:(CGFloat)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options completion:(void (^)(void))completion;
 
 @end

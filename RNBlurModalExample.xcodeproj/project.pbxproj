@@ -18,6 +18,13 @@
 		866E0B56162F2F2D00DE51B9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 866E0B55162F2F2D00DE51B9 /* Default-568h@2x.png */; };
 		866E0B59162F2F2D00DE51B9 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 866E0B57162F2F2D00DE51B9 /* MainStoryboard.storyboard */; };
 		866E0B5C162F2F2D00DE51B9 /* RNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 866E0B5B162F2F2D00DE51B9 /* RNViewController.m */; };
+		866E0B64162F30AF00DE51B9 /* Profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 866E0B62162F30AF00DE51B9 /* Profile.png */; };
+		866E0B65162F30AF00DE51B9 /* Profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 866E0B63162F30AF00DE51B9 /* Profile@2x.png */; };
+		866E0B68162F31BE00DE51B9 /* RNBlurModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 866E0B67162F31BE00DE51B9 /* RNBlurModalView.m */; };
+		866E0B6A162F323300DE51B9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 866E0B69162F323300DE51B9 /* QuartzCore.framework */; };
+		866E0B75162F44D400DE51B9 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 866E0B74162F44D400DE51B9 /* Accelerate.framework */; };
+		867FFEB31631E18500EE9936 /* MainStoryboard_ipad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 867FFEB11631E18500EE9936 /* MainStoryboard_ipad.storyboard */; };
+		86A650D9163080D5001DD552 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86A650D8163080D5001DD552 /* CoreImage.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +44,14 @@
 		866E0B58162F2F2D00DE51B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		866E0B5A162F2F2D00DE51B9 /* RNViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNViewController.h; sourceTree = "<group>"; };
 		866E0B5B162F2F2D00DE51B9 /* RNViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNViewController.m; sourceTree = "<group>"; };
+		866E0B62162F30AF00DE51B9 /* Profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Profile.png; sourceTree = "<group>"; };
+		866E0B63162F30AF00DE51B9 /* Profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Profile@2x.png"; sourceTree = "<group>"; };
+		866E0B66162F31BE00DE51B9 /* RNBlurModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNBlurModalView.h; sourceTree = SOURCE_ROOT; };
+		866E0B67162F31BE00DE51B9 /* RNBlurModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNBlurModalView.m; sourceTree = SOURCE_ROOT; };
+		866E0B69162F323300DE51B9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		866E0B74162F44D400DE51B9 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		867FFEB21631E18500EE9936 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_ipad.storyboard; sourceTree = "<group>"; };
+		86A650D8163080D5001DD552 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +59,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86A650D9163080D5001DD552 /* CoreImage.framework in Frameworks */,
+				866E0B75162F44D400DE51B9 /* Accelerate.framework in Frameworks */,
+				866E0B6A162F323300DE51B9 /* QuartzCore.framework in Frameworks */,
 				866E0B40162F2F2D00DE51B9 /* UIKit.framework in Frameworks */,
 				866E0B42162F2F2D00DE51B9 /* Foundation.framework in Frameworks */,
 				866E0B44162F2F2D00DE51B9 /* CoreGraphics.framework in Frameworks */,
@@ -56,6 +74,8 @@
 		866E0B30162F2F2D00DE51B9 = {
 			isa = PBXGroup;
 			children = (
+				866E0B66162F31BE00DE51B9 /* RNBlurModalView.h */,
+				866E0B67162F31BE00DE51B9 /* RNBlurModalView.m */,
 				866E0B45162F2F2D00DE51B9 /* RNBlurModalExample */,
 				866E0B3E162F2F2D00DE51B9 /* Frameworks */,
 				866E0B3C162F2F2D00DE51B9 /* Products */,
@@ -73,6 +93,9 @@
 		866E0B3E162F2F2D00DE51B9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				86A650D8163080D5001DD552 /* CoreImage.framework */,
+				866E0B74162F44D400DE51B9 /* Accelerate.framework */,
+				866E0B69162F323300DE51B9 /* QuartzCore.framework */,
 				866E0B3F162F2F2D00DE51B9 /* UIKit.framework */,
 				866E0B41162F2F2D00DE51B9 /* Foundation.framework */,
 				866E0B43162F2F2D00DE51B9 /* CoreGraphics.framework */,
@@ -83,6 +106,9 @@
 		866E0B45162F2F2D00DE51B9 /* RNBlurModalExample */ = {
 			isa = PBXGroup;
 			children = (
+				867FFEB11631E18500EE9936 /* MainStoryboard_ipad.storyboard */,
+				866E0B62162F30AF00DE51B9 /* Profile.png */,
+				866E0B63162F30AF00DE51B9 /* Profile@2x.png */,
 				866E0B4E162F2F2D00DE51B9 /* RNAppDelegate.h */,
 				866E0B4F162F2F2D00DE51B9 /* RNAppDelegate.m */,
 				866E0B57162F2F2D00DE51B9 /* MainStoryboard.storyboard */,
@@ -164,6 +190,9 @@
 				866E0B54162F2F2D00DE51B9 /* Default@2x.png in Resources */,
 				866E0B56162F2F2D00DE51B9 /* Default-568h@2x.png in Resources */,
 				866E0B59162F2F2D00DE51B9 /* MainStoryboard.storyboard in Resources */,
+				866E0B64162F30AF00DE51B9 /* Profile.png in Resources */,
+				866E0B65162F30AF00DE51B9 /* Profile@2x.png in Resources */,
+				867FFEB31631E18500EE9936 /* MainStoryboard_ipad.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +206,7 @@
 				866E0B4C162F2F2D00DE51B9 /* main.m in Sources */,
 				866E0B50162F2F2D00DE51B9 /* RNAppDelegate.m in Sources */,
 				866E0B5C162F2F2D00DE51B9 /* RNViewController.m in Sources */,
+				866E0B68162F31BE00DE51B9 /* RNBlurModalView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +227,14 @@
 				866E0B58162F2F2D00DE51B9 /* en */,
 			);
 			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+		867FFEB11631E18500EE9936 /* MainStoryboard_ipad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				867FFEB21631E18500EE9936 /* en */,
+			);
+			name = MainStoryboard_ipad.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -258,7 +296,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RNBlurModalExample/RNBlurModalExample-Prefix.pch";
 				INFOPLIST_FILE = "RNBlurModalExample/RNBlurModalExample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -269,7 +309,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RNBlurModalExample/RNBlurModalExample-Prefix.pch";
 				INFOPLIST_FILE = "RNBlurModalExample/RNBlurModalExample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -293,6 +335,7 @@
 				866E0B61162F2F2D00DE51B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
