@@ -1,4 +1,4 @@
-RNBlueModalView
+RNBlurModalView
 ====
 
 RNBlurModal adds *depth* to the traditional modal/alert view. Calling the view is incredibly similar to setting up and showing a UIAlertView. You can also setup your own custom views and display them with a blurry background. The goal is to truly draw the user's focus directly to your alert using natural effects.
@@ -65,6 +65,12 @@ extern NSString * const kRNBlurDidHidewNotification;
 ``` objective-c
 @property (assign, readonly) BOOL isVisible;
 ```
+
+## Contributions
+
+The drawing for the dismiss button comes from [David Keegan's](http://davidkeegan.com/) awesome [KGModal](https://github.com/kgn/KGModal) project.
+
+The blurring algorithm is applied from this [awesome blog post](http://indieambitions.com/idevblogaday/perform-blur-vimage-accelerate-framework-tutorial/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+IndieAmbitions+%28Indie+Ambitions%29).
 
 ## Contact
 
