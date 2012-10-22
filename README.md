@@ -1,7 +1,7 @@
 RNBlurModalView
 ====
 
-RNBlurModal adds *depth* to the traditional modal/alert view. Calling the view is incredibly similar to setting up and showing a UIAlertView. You can also setup your own custom views and display them with a blurry background. The goal is to truly draw the user's focus directly to your alert using natural effects.
+RNBlurModal adds *depth* to the traditional modal/alert view. Calling the view is incredibly similar to setting up and showing a UIAlertView. You can also setup your own custom views and display them with a blurry background. The goal is to truly draw the user's focus directly to your alert using natural effects. This project works on all iOS devices at all orientations with ARC.
 
 <img src="https://github.com/rnystrom/RNBlurModalView/raw/master/images/image.jpg" />
 
