@@ -29,9 +29,9 @@
 
 /*
     This bit is important! In order to prevent capturing selected states of UIResponders I've implemented a delay. Please feel free to set this delay to *whatever* you deem apprpriate.
-    I've defaulted it to 0.075 seconds. You can do shorter/longer as you see fit. I've found 0.05 seconds to be too short with a RoundedRect UIButton.
+    I've defaulted it to 0.125 seconds. You can do shorter/longer as you see fit. 
  */
-CGFloat const kRNBlurDefaultDelay = 0.075f;
+CGFloat const kRNBlurDefaultDelay = 0.125f;
 
 /*
     You can also change this constant to make the blur more "blurry". I recommend the tasteful level of 0.2 and no higher. However, you are free to change this from 0.0 to 1.0.
@@ -138,13 +138,22 @@ typedef void (^RNBlurCompletion)(void);
 
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        // TODO: change to custom
         _dismissButton = [[RNCloseButton alloc] init];
         _dismissButton.center = CGPointZero;
         [_dismissButton addTarget:self action:@selector(hide) forControlEvents:UIControlEventTouchUpInside];
         
         self.alpha = 0.f;
         self.backgroundColor = [UIColor clearColor];
+//        self.backgroundColor = [UIColor redColor];
+//        self.layer.borderWidth = 2.f;
+//        self.layer.borderColor = [UIColor blackColor].CGColor;
+        
+        self.autoresizingMask = (UIViewAutoresizingFlexibleWidth |
+                                  UIViewAutoresizingFlexibleHeight |
+                                  UIViewAutoresizingFlexibleLeftMargin |
+                                  UIViewAutoresizingFlexibleTopMargin);
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChangeNotification:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     }
     return self;
 }
@@ -183,6 +192,32 @@ typedef void (^RNBlurCompletion)(void);
 }
 
 
+- (void)orientationDidChangeNotification:(NSNotification*)notification {
+    [self performSelector:@selector(updateSubviews) withObject:nil afterDelay:0.3f];
+}
+
+
+- (void)updateSubviews {
+    self.hidden = YES;
+    
+    // get new screenshot after orientation
+    [_blurView removeFromSuperview]; _blurView = nil;
+    _blurView = [[RNBlurView alloc] initWithCoverView:_controller.view];
+    _blurView.alpha = 1.f;
+    [_controller.view insertSubview:_blurView belowSubview:self];
+    
+    self.hidden = NO;
+
+    _contentView.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    _dismissButton.center = _contentView.origin;
+}
+
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
 - (void)show {
     [self showWithDuration:kRNBlurDefaultDuration delay:0 options:kNilOptions completion:NULL];
 }
@@ -203,6 +238,7 @@ typedef void (^RNBlurCompletion)(void);
     if (! self.isVisible) {
         if (! self.superview) {
             [_controller.view addSubview:self];
+            self.top = 0;
         }
         
         _blurView = [[RNBlurView alloc] initWithCoverView:_controller.view];
@@ -269,7 +305,8 @@ typedef void (^RNBlurCompletion)(void);
 }
 
 - (id)initWithCoverView:(UIView *)view {
-    if (self = [super initWithFrame:CGRectMake(0, 0, view.frame.size.width, view.frame.size.height)]) {
+    if (self = [super initWithFrame:CGRectMake(0, 0, view.bounds.size.width, view.bounds.size.height)]) {
+        CGRect frame = view.frame;
         _coverView = view;
         UIImage *blur = [_coverView screenshot];
         self.image = [blur boxblurImageWithBlur:kRNDefaultBlurScale];

@@ -28,6 +28,10 @@ RNBlurModalView *modal = [[RNBlurModalView alloc] initWithViewController:self vi
 [modal show];
 ```
 
+## Caveat
+
+The only thing I'll warn users about is that animations beneath the modal will be "paused". When it comes down to it, I am overlaying a UIImage on top of your controller. I've tried messing with some hacky <code>CADisplayLink</code> methods, but I can't seem to get a screenshot of the present *state* of the controller, just the configuration.
+
 ## Configuration
 
 Set a couple of different properties of your modal view to change how it appears:
