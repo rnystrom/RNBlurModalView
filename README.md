@@ -12,6 +12,8 @@ Super simple. Just drag & drop RNBlurModalView.h/.m into your project. In your P
 * QuartzCore.framework
 * Accelerate.framework
 
+Additionally in your project, under the Build Phases tab, expand Compile Sources and add RNBlurModalView.m.
+
 ## Usage
 
 The simplest way to get up and running with RNBlurModalView is to display a default view. Inside of your view controller, write the following code:
