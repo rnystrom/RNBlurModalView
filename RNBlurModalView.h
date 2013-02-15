@@ -39,6 +39,10 @@ extern NSString * const kRNBlurDidHidewNotification;
 
 - (id)initWithViewController:(UIViewController*)viewController view:(UIView*)view;
 - (id)initWithViewController:(UIViewController*)viewController title:(NSString*)title message:(NSString*)message;
+- (id)initWithParentView:(UIView*)parentView view:(UIView*)view;
+- (id)initWithParentView:(UIView*)parentView title:(NSString*)title message:(NSString*)message;
+- (id)initWithView:(UIView*)view;
+- (id)initWithTitle:(NSString*)title message:(NSString*)message;
 
 - (void)show;
 - (void)showWithDuration:(CGFloat)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options completion:(void (^)(void))completion;
