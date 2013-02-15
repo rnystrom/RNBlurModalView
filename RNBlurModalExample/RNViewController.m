@@ -58,10 +58,10 @@
         view.layer.borderColor = [UIColor blackColor].CGColor;
         view.layer.borderWidth = 5.f;
         
-        modal = [[RNBlurModalView alloc] initWithViewController:self view:view];
+        modal = [[RNBlurModalView alloc] initWithView:view];
     }
     else {
-        modal = [[RNBlurModalView alloc] initWithViewController:self title:@"Hello world!" message:@"This is the default modal for RNBlurModalView. Feel free to pass any UIView to it as you wish!"];
+        modal = [[RNBlurModalView alloc] initWithTitle:@"Hello world!" message:@"This is the default modal for RNBlurModalView. Feel free to pass any UIView to it as you wish!"];
     }
     [modal show];
 }

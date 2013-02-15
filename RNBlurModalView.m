@@ -86,6 +86,7 @@ typedef void (^RNBlurCompletion)(void);
 
 @implementation RNBlurModalView {
     UIViewController *_controller;
+    UIView *_parentView;
     UIView *_contentView;
     RNCloseButton *_dismissButton;
     RNBlurView *_blurView;
@@ -159,12 +160,14 @@ typedef void (^RNBlurCompletion)(void);
 }
 
 
+
 - (id)initWithViewController:(UIViewController*)viewController view:(UIView*)view {
     if (self = [self initWithFrame:CGRectMake(0, 0, viewController.view.width, viewController.view.height)]) {
         [self addSubview:view];
         _contentView = view;
         _contentView.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
         _controller = viewController;
+        _parentView = nil;
         _contentView.clipsToBounds = YES;
         _contentView.layer.masksToBounds = YES;
         
@@ -182,6 +185,47 @@ typedef void (^RNBlurCompletion)(void);
     }
     return self;
 }
+
+- (id)initWithParentView:(UIView*)parentView view:(UIView*)view {
+    if (self = [self initWithFrame:CGRectMake(0, 0, parentView.width, parentView.height)]) {
+        [self addSubview:view];
+        _contentView = view;
+        _contentView.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        _controller = nil;
+        _parentView = parentView;
+        _contentView.clipsToBounds = YES;
+        _contentView.layer.masksToBounds = YES;
+        
+        _dismissButton.center = CGPointMake(view.left, view.top);
+        [self addSubview:_dismissButton];
+    }
+    return self;
+}
+
+- (id)initWithParentView:(UIView*)parentView title:(NSString*)title message:(NSString*)message {
+    UIView *view = [RNBlurModalView generateModalViewWithTitle:title message:message];
+    if (self = [self initWithParentView:parentView view:view]) {
+        // nothing to see here
+    }
+    return self;
+}
+
+
+- (id)initWithView:(UIView*)view {
+    if (self = [self initWithParentView:[[UIApplication sharedApplication].delegate window].rootViewController.view view:view]) {
+        // nothing to see here
+    }
+    return self;
+}
+
+- (id)initWithTitle:(NSString*)title message:(NSString*)message {
+    UIView *view = [RNBlurModalView generateModalViewWithTitle:title message:message];
+    if (self = [self initWithView:view]) {
+        // nothing to see here
+    }
+    return self;
+}
+
 
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
@@ -202,9 +246,20 @@ typedef void (^RNBlurCompletion)(void);
     
     // get new screenshot after orientation
     [_blurView removeFromSuperview]; _blurView = nil;
-    _blurView = [[RNBlurView alloc] initWithCoverView:_controller.view];
-    _blurView.alpha = 1.f;
-    [_controller.view insertSubview:_blurView belowSubview:self];
+    if (_controller) {
+        _blurView = [[RNBlurView alloc] initWithCoverView:_controller.view];
+        _blurView.alpha = 1.f;
+        [_controller.view insertSubview:_blurView belowSubview:self];
+
+    }
+    else if(_parentView) {
+        _blurView = [[RNBlurView alloc] initWithCoverView:_parentView];
+        _blurView.alpha = 1.f;
+        [_parentView insertSubview:_blurView belowSubview:self];
+
+    }
+    
+    
     
     self.hidden = NO;
 
@@ -237,13 +292,25 @@ typedef void (^RNBlurCompletion)(void);
 - (void)delayedShow {
     if (! self.isVisible) {
         if (! self.superview) {
-            [_controller.view addSubview:self];
+            if (_controller) {
+                [_controller.view addSubview:self];
+            }
+            else if(_parentView) {
+                [_parentView addSubview:self];
+            }
             self.top = 0;
         }
         
-        _blurView = [[RNBlurView alloc] initWithCoverView:_controller.view];
-        _blurView.alpha = 0.f;
-        [_controller.view insertSubview:_blurView belowSubview:self];
+        if (_controller) {
+            _blurView = [[RNBlurView alloc] initWithCoverView:_controller.view];
+            _blurView.alpha = 0.f;
+            [_controller.view insertSubview:_blurView belowSubview:self];
+        }
+        else if(_parentView) {
+            _blurView = [[RNBlurView alloc] initWithCoverView:_parentView];
+            _blurView.alpha = 0.f;
+            [_parentView insertSubview:_blurView belowSubview:self];
+        }
         
         self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.4, 0.4);
         [UIView animateWithDuration:self.animationDuration animations:^{
