@@ -133,6 +133,8 @@ typedef void (^RNBlurCompletion)(void);
     
     view.height = messageLabel.bottom + padding;
     
+    view.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
+    
     return view;
 }
 
@@ -226,7 +228,10 @@ typedef void (^RNBlurCompletion)(void);
     return self;
 }
 
-
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    _dismissButton.center = CGPointMake(_contentView.left, _contentView.top);
+}
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
@@ -293,9 +298,12 @@ typedef void (^RNBlurCompletion)(void);
     if (! self.isVisible) {
         if (! self.superview) {
             if (_controller) {
+                self.frame = CGRectMake(0, 0, _controller.view.bounds.size.width, _controller.view.bounds.size.height);
                 [_controller.view addSubview:self];
             }
             else if(_parentView) {
+                self.frame = CGRectMake(0, 0, _parentView.bounds.size.width, _parentView.bounds.size.height);
+
                 [_parentView addSubview:self];
             }
             self.top = 0;
@@ -304,11 +312,15 @@ typedef void (^RNBlurCompletion)(void);
         if (_controller) {
             _blurView = [[RNBlurView alloc] initWithCoverView:_controller.view];
             _blurView.alpha = 0.f;
+            self.frame = CGRectMake(0, 0, _controller.view.bounds.size.width, _controller.view.bounds.size.height);
+
             [_controller.view insertSubview:_blurView belowSubview:self];
         }
         else if(_parentView) {
             _blurView = [[RNBlurView alloc] initWithCoverView:_parentView];
             _blurView.alpha = 0.f;
+            self.frame = CGRectMake(0, 0, _parentView.bounds.size.width, _parentView.bounds.size.height);
+
             [_parentView insertSubview:_blurView belowSubview:self];
         }
         
@@ -373,7 +385,6 @@ typedef void (^RNBlurCompletion)(void);
 
 - (id)initWithCoverView:(UIView *)view {
     if (self = [super initWithFrame:CGRectMake(0, 0, view.bounds.size.width, view.bounds.size.height)]) {
-        CGRect frame = view.frame;
         _coverView = view;
         UIImage *blur = [_coverView screenshot];
         self.image = [blur boxblurImageWithBlur:kRNDefaultBlurScale];
@@ -665,7 +676,6 @@ typedef void (^RNBlurCompletion)(void);
     free(pixelBuffer);
     CFRelease(inBitmapData);
     
-    CGColorSpaceRelease(colorSpace);
     CGImageRelease(imageRef);
     
     return returnImage;
