@@ -373,7 +373,7 @@ typedef void (^RNBlurCompletion)(void);
 
 - (id)initWithCoverView:(UIView *)view {
     if (self = [super initWithFrame:CGRectMake(0, 0, view.bounds.size.width, view.bounds.size.height)]) {
-        CGRect frame = view.frame;
+        //CGRect frame = view.frame;
         _coverView = view;
         UIImage *blur = [_coverView screenshot];
         self.image = [blur boxblurImageWithBlur:kRNDefaultBlurScale];
@@ -639,8 +639,22 @@ typedef void (^RNBlurCompletion)(void);
     outBuffer.height = CGImageGetHeight(img);
     outBuffer.rowBytes = CGImageGetBytesPerRow(img);
     
+    void *pixelBuffer2 = malloc(CGImageGetBytesPerRow(img) * CGImageGetHeight(img));
+    vImage_Buffer outBuffer2;
+    outBuffer2.data = pixelBuffer2;
+    outBuffer2.width = CGImageGetWidth(img);
+    outBuffer2.height = CGImageGetHeight(img);
+    outBuffer2.rowBytes = CGImageGetBytesPerRow(img);
+    int boxSize2 = (int)(blur * 0.5 * 50);
+    boxSize2 = boxSize2 - (boxSize2 % 2) + 1;
+    
     //perform convolution
-    error = vImageBoxConvolve_ARGB8888(&inBuffer, &outBuffer, NULL, 0, 0, boxSize, boxSize, NULL, kvImageEdgeExtend);
+    error = vImageBoxConvolve_ARGB8888(&inBuffer, &outBuffer2, NULL, 0, 0, boxSize, boxSize, NULL, kvImageEdgeExtend);
+    
+    vImagePremultipliedConstAlphaBlend_ARGB8888(&inBuffer, 127, &outBuffer2, &inBuffer, kvImageEdgeExtend);
+    
+    error = vImageBoxConvolve_ARGB8888(&inBuffer, &outBuffer, NULL, 0, 0, boxSize2, boxSize2, NULL, kvImageEdgeExtend);
+    
     
     
     if (error) {
