@@ -604,7 +604,7 @@ typedef void (^RNBlurCompletion)(void);
     if (blur < 0.f || blur > 1.f) {
         blur = 0.5f;
     }
-    int boxSize = (int)(blur * 50);
+    int boxSize = (int)(blur * 40);
     boxSize = boxSize - (boxSize % 2) + 1;
     
     CGImageRef img = self.CGImage;
@@ -620,6 +620,7 @@ typedef void (^RNBlurCompletion)(void);
     
     CGDataProviderRef inProvider = CGImageGetDataProvider(img);
     CFDataRef inBitmapData = CGDataProviderCopyData(inProvider);
+
     
     inBuffer.width = CGImageGetWidth(img);
     inBuffer.height = CGImageGetHeight(img);
@@ -639,24 +640,19 @@ typedef void (^RNBlurCompletion)(void);
     outBuffer.height = CGImageGetHeight(img);
     outBuffer.rowBytes = CGImageGetBytesPerRow(img);
     
+    // Create a third buffer for intermediate processing
     void *pixelBuffer2 = malloc(CGImageGetBytesPerRow(img) * CGImageGetHeight(img));
     vImage_Buffer outBuffer2;
     outBuffer2.data = pixelBuffer2;
     outBuffer2.width = CGImageGetWidth(img);
     outBuffer2.height = CGImageGetHeight(img);
     outBuffer2.rowBytes = CGImageGetBytesPerRow(img);
-    int boxSize2 = (int)(blur * 0.5 * 50);
-    boxSize2 = boxSize2 - (boxSize2 % 2) + 1;
     
     //perform convolution
     error = vImageBoxConvolve_ARGB8888(&inBuffer, &outBuffer2, NULL, 0, 0, boxSize, boxSize, NULL, kvImageEdgeExtend);
-    
-    vImagePremultipliedConstAlphaBlend_ARGB8888(&inBuffer, 127, &outBuffer2, &inBuffer, kvImageEdgeExtend);
-    
-    error = vImageBoxConvolve_ARGB8888(&inBuffer, &outBuffer, NULL, 0, 0, boxSize2, boxSize2, NULL, kvImageEdgeExtend);
-    
-    
-    
+    error = vImageBoxConvolve_ARGB8888(&outBuffer2, &inBuffer, NULL, 0, 0, boxSize, boxSize, NULL, kvImageEdgeExtend);
+    error = vImageBoxConvolve_ARGB8888(&inBuffer, &outBuffer, NULL, 0, 0, boxSize, boxSize, NULL, kvImageEdgeExtend);
+
     if (error) {
         NSLog(@"error from convolution %ld", error);
     }
