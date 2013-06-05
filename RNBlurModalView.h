@@ -50,4 +50,7 @@ extern NSString * const kRNBlurDidHidewNotification;
 - (void)hide;
 - (void)hideWithDuration:(CGFloat)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options completion:(void (^)(void))completion;
 
+-(void)hideCloseButton:(BOOL)hide;
+
+
 @end
