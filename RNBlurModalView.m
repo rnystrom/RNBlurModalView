@@ -374,6 +374,9 @@ typedef void (^RNBlurCompletion)(void);
     }
 }
 
+-(void)hideCloseButton:(BOOL)hide {
+    [_dismissButton setHidden:hide];
+}
 
 @end
 
