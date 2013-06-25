@@ -62,6 +62,9 @@
     }
     else {
         modal = [[RNBlurModalView alloc] initWithTitle:@"Hello world! Hello world! Hello world! Hello world! Hello world! Hello world! Hello world!" message:@"This is the default modal for RNBlurModalView. Feel free to pass any UIView to it as you wish!"];
+        modal.defaultHideBlock = ^{
+            NSLog(@"Code called after the modal view is hidden");
+        };
     }
     [modal show];
 }

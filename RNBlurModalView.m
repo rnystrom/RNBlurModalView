@@ -346,7 +346,7 @@ typedef void (^RNBlurCompletion)(void);
 
 
 - (void)hide {
-    [self hideWithDuration:kRNBlurDefaultDuration delay:0 options:kNilOptions completion:NULL];
+    [self hideWithDuration:kRNBlurDefaultDuration delay:0 options:kNilOptions completion:self.defaultHideBlock];
 }
 
 
