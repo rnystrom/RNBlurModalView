@@ -115,6 +115,7 @@ typedef void (^RNBlurCompletion)(void);
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.backgroundColor = [UIColor clearColor];
     [titleLabel autoHeight];
+    titleLabel.numberOfLines = 0;
     titleLabel.top = padding;
     [view addSubview:titleLabel];
     

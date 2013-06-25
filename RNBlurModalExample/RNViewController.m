@@ -61,7 +61,7 @@
         modal = [[RNBlurModalView alloc] initWithView:view];
     }
     else {
-        modal = [[RNBlurModalView alloc] initWithTitle:@"Hello world!" message:@"This is the default modal for RNBlurModalView. Feel free to pass any UIView to it as you wish!"];
+        modal = [[RNBlurModalView alloc] initWithTitle:@"Hello world! Hello world! Hello world! Hello world! Hello world! Hello world! Hello world!" message:@"This is the default modal for RNBlurModalView. Feel free to pass any UIView to it as you wish!"];
     }
     [modal show];
 }
