@@ -244,7 +244,9 @@ typedef void (^RNBlurCompletion)(void);
 
 
 - (void)orientationDidChangeNotification:(NSNotification*)notification {
-    [self performSelector:@selector(updateSubviews) withObject:nil afterDelay:0.3f];
+	if ([self isVisible]) {
+		[self performSelector:@selector(updateSubviews) withObject:nil afterDelay:0.3f];
+	}
 }
 
 
