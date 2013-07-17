@@ -517,6 +517,9 @@ typedef void (^RNBlurCompletion)(void);
         closeButtonImage = [self closeButtonImage];
     });
     [self setBackgroundImage:closeButtonImage forState:UIControlStateNormal];
+    self.accessibilityTraits |= UIAccessibilityTraitButton;
+    self.accessibilityLabel = NSLocalizedString(@"Dismiss Alert", @"Dismiss Alert Close Button");
+    self.accessibilityHint = NSLocalizedString(@"Dismisses this alert.",@"Dismiss Alert close button hint");
     return self;
 }
 
