@@ -7,6 +7,15 @@ RNBlurModal adds *depth* to the traditional modal/alert view. Calling the view i
 
 ## Installation
 
+### With CocoaPods
+Just add this line to your podfile
+
+```
+pod 'RNBlurModalView', '~> 0.1.0'
+```
+
+### Manual installation
+
 Super simple. Just drag & drop RNBlurModalView.h/.m into your project. In your Project, find the Build Phases tab and expand Link Binary With Libraries. Add the following frameworks to your project: 
 
 * QuartzCore.framework
