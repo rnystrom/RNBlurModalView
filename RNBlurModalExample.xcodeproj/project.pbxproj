@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C5B27C2930419E66B84C9C0 /* RNBlurModalView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B23C833DA9944184E2F7E /* RNBlurModalView.podspec */; };
 		866E0B40162F2F2D00DE51B9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 866E0B3F162F2F2D00DE51B9 /* UIKit.framework */; };
 		866E0B42162F2F2D00DE51B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 866E0B41162F2F2D00DE51B9 /* Foundation.framework */; };
 		866E0B44162F2F2D00DE51B9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 866E0B43162F2F2D00DE51B9 /* CoreGraphics.framework */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3C5B23C833DA9944184E2F7E /* RNBlurModalView.podspec */ = {isa = PBXFileReference; lastKnownFileType = file.podspec; path = RNBlurModalView.podspec; sourceTree = "<group>"; };
 		866E0B3B162F2F2D00DE51B9 /* RNBlurModalExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RNBlurModalExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		866E0B3F162F2F2D00DE51B9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		866E0B41162F2F2D00DE51B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -79,6 +81,7 @@
 				866E0B45162F2F2D00DE51B9 /* RNBlurModalExample */,
 				866E0B3E162F2F2D00DE51B9 /* Frameworks */,
 				866E0B3C162F2F2D00DE51B9 /* Products */,
+				3C5B23C833DA9944184E2F7E /* RNBlurModalView.podspec */,
 			);
 			sourceTree = "<group>";
 		};
@@ -193,6 +196,7 @@
 				866E0B64162F30AF00DE51B9 /* Profile.png in Resources */,
 				866E0B65162F30AF00DE51B9 /* Profile@2x.png in Resources */,
 				867FFEB31631E18500EE9936 /* MainStoryboard_ipad.storyboard in Resources */,
+				3C5B27C2930419E66B84C9C0 /* RNBlurModalView.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
