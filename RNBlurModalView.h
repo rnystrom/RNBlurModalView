@@ -26,6 +26,12 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
+extern CGFloat kRNBlurDefaultDelay;
+extern CGFloat kRNDefaultBlurScale;
+extern CGFloat kRNBlurDefaultDuration;
+extern CGFloat kRNBlurViewMaxAlpha;
+extern CGFloat kRNBlurBounceOutDurationScale;
+
 extern NSString * const kRNBlurDidShowNotification;
 extern NSString * const kRNBlurDidHidewNotification;
 

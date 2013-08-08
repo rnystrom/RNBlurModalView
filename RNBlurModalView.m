@@ -31,17 +31,17 @@
     This bit is important! In order to prevent capturing selected states of UIResponders I've implemented a delay. Please feel free to set this delay to *whatever* you deem apprpriate.
     I've defaulted it to 0.125 seconds. You can do shorter/longer as you see fit. 
  */
-CGFloat const kRNBlurDefaultDelay = 0.125f;
+CGFloat kRNBlurDefaultDelay = 0.125f;
 
 /*
     You can also change this constant to make the blur more "blurry". I recommend the tasteful level of 0.2 and no higher. However, you are free to change this from 0.0 to 1.0.
  */
-CGFloat const kRNDefaultBlurScale = 0.2f;
+CGFloat kRNDefaultBlurScale = 0.2f;
 
-CGFloat const kRNBlurDefaultDuration = 0.2f;
-CGFloat const kRNBlurViewMaxAlpha = 1.f;
+CGFloat kRNBlurDefaultDuration = 0.2f;
+CGFloat kRNBlurViewMaxAlpha = 1.f;
 
-CGFloat const kRNBlurBounceOutDurationScale = 0.8f;
+CGFloat kRNBlurBounceOutDurationScale = 0.8f;
 
 NSString * const kRNBlurDidShowNotification = @"com.whoisryannystrom.RNBlurModalView.show";
 NSString * const kRNBlurDidHidewNotification = @"com.whoisryannystrom.RNBlurModalView.hide";
