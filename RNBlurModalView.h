@@ -35,7 +35,7 @@ extern CGFloat kRNBlurBounceOutDurationScale;
 extern NSString * const kRNBlurDidShowNotification;
 extern NSString * const kRNBlurDidHidewNotification;
 
-@interface RNBlurModalView : UIView
+@interface RNBlurModalView : UIView <UIGestureRecognizerDelegate>
 
 @property (assign, readonly) BOOL isVisible;
 
@@ -43,6 +43,7 @@ extern NSString * const kRNBlurDidHidewNotification;
 @property (assign) CGFloat animationDelay;
 @property (assign) UIViewAnimationOptions animationOptions;
 @property (assign) BOOL dismissButtonRight;
+@property (nonatomic) BOOL tapOutsideToDismiss;
 @property (nonatomic, copy) void (^defaultHideBlock)(void);
 
 - (id)initWithViewController:(UIViewController*)viewController view:(UIView*)view;

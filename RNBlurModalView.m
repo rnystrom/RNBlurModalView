@@ -146,6 +146,8 @@ typedef void (^RNBlurCompletion)(void);
         _dismissButton.center = CGPointZero;
         [_dismissButton addTarget:self action:@selector(hide) forControlEvents:UIControlEventTouchUpInside];
         
+        self.tapOutsideToDismiss = YES;
+        
         self.alpha = 0.f;
         self.backgroundColor = [UIColor clearColor];
 //        self.backgroundColor = [UIColor redColor];
@@ -158,6 +160,11 @@ typedef void (^RNBlurCompletion)(void);
                                   UIViewAutoresizingFlexibleTopMargin);
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChangeNotification:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+                
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+        [singleTap setDelegate:self];
+        [singleTap setNumberOfTapsRequired:1];
+        [self addGestureRecognizer:singleTap];
     }
     return self;
 }
@@ -381,6 +388,16 @@ typedef void (^RNBlurCompletion)(void);
 
 -(void)hideCloseButton:(BOOL)hide {
     [_dismissButton setHidden:hide];
+}
+
+-(void) handleTap:(UITapGestureRecognizer *) recognizer {
+    if(self.tapOutsideToDismiss){
+        [self hide];
+    }
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return !(touch.view == _contentView || touch.view == _dismissButton);
 }
 
 @end
