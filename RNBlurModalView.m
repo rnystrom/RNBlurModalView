@@ -175,7 +175,7 @@ typedef void (^RNBlurCompletion)(void);
     if (self = [self initWithFrame:CGRectMake(0, 0, viewController.view.width, viewController.view.height)]) {
         [self addSubview:view];
         _contentView = view;
-        _contentView.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        _contentView.center = CGPointMake(CGRectGetMidX(self.frame) - self.offsetX, CGRectGetMidY(self.frame) - self.offsetY);
         _controller = viewController;
         _parentView = nil;
         _contentView.clipsToBounds = YES;
@@ -200,7 +200,7 @@ typedef void (^RNBlurCompletion)(void);
     if (self = [self initWithFrame:CGRectMake(0, 0, parentView.width, parentView.height)]) {
         [self addSubview:view];
         _contentView = view;
-        _contentView.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        _contentView.center = CGPointMake(CGRectGetMidX(self.frame) - self.offsetX, CGRectGetMidY(self.frame) - self.offsetY);
         _controller = nil;
         _parentView = parentView;
         _contentView.clipsToBounds = YES;
@@ -279,8 +279,8 @@ typedef void (^RNBlurCompletion)(void);
     
     
     self.hidden = NO;
-
-    _contentView.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    
+    _contentView.center = CGPointMake(CGRectGetMidX(self.frame) - self.offsetX, CGRectGetMidY(self.frame) - self.offsetY);
     _dismissButton.center = _contentView.origin;
 }
 
@@ -335,6 +335,9 @@ typedef void (^RNBlurCompletion)(void);
 
             [_parentView insertSubview:_blurView belowSubview:self];
         }
+                
+        _contentView.center = CGPointMake(CGRectGetMidX(self.frame) - self.offsetX, CGRectGetMidY(self.frame) - self.offsetY);
+        _dismissButton.center = _contentView.origin;
         
         self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.4, 0.4);
         [UIView animateWithDuration:self.animationDuration animations:^{
