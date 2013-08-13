@@ -47,6 +47,9 @@ extern NSString * const kRNBlurDidHidewNotification;
 @property (nonatomic, copy) void (^defaultHideBlock)(void);
 @property (assign) CGFloat offsetX;
 @property (assign) CGFloat offsetY;
+@property (nonatomic, assign) CGAffineTransform startTransform;
+@property (nonatomic, assign) CGAffineTransform endTransform;
+
 
 - (id)initWithViewController:(UIViewController*)viewController view:(UIView*)view;
 - (id)initWithViewController:(UIViewController*)viewController title:(NSString*)title message:(NSString*)message;

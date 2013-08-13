@@ -139,7 +139,6 @@ typedef void (^RNBlurCompletion)(void);
     return view;
 }
 
-
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         _dismissButton = [[RNCloseButton alloc] init];
@@ -165,6 +164,9 @@ typedef void (^RNBlurCompletion)(void);
         [singleTap setDelegate:self];
         [singleTap setNumberOfTapsRequired:1];
         [self addGestureRecognizer:singleTap];
+        
+        self.startTransform = CGAffineTransformScale(CGAffineTransformIdentity, 0.4, 0.4);
+        self.endTransform = CGAffineTransformScale(CGAffineTransformIdentity, 1.f, 1.f);
     }
     return self;
 }
@@ -339,7 +341,8 @@ typedef void (^RNBlurCompletion)(void);
         _contentView.center = CGPointMake(CGRectGetMidX(self.frame) - self.offsetX, CGRectGetMidY(self.frame) - self.offsetY);
         _dismissButton.center = _contentView.origin;
         
-        self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.4, 0.4);
+       self.transform = self.startTransform;
+        
         [UIView animateWithDuration:self.animationDuration animations:^{
             _blurView.alpha = 1.f;
             self.alpha = 1.f;
@@ -372,6 +375,7 @@ typedef void (^RNBlurCompletion)(void);
                          animations:^{
                              self.alpha = 0.f;
                              _blurView.alpha = 0.f;
+                             self.transform = self.endTransform;
                          }
                          completion:^(BOOL finished){
                              if (finished) {
