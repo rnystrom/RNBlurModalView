@@ -91,6 +91,7 @@ typedef void (^RNBlurCompletion)(void);
     RNCloseButton *_dismissButton;
     RNBlurView *_blurView;
     RNBlurCompletion _completion;
+    UITapGestureRecognizer *_tapGesture;
 }
 
 + (UIView*)generateModalViewWithTitle:(NSString*)title message:(NSString*)message {
@@ -158,6 +159,9 @@ typedef void (^RNBlurCompletion)(void);
                                   UIViewAutoresizingFlexibleTopMargin);
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChangeNotification:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+    
+        _tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hide)];
+    
     }
     return self;
 }
@@ -189,7 +193,7 @@ typedef void (^RNBlurCompletion)(void);
     return self;
 }
 
-- (id)initWithParentView:(UIView*)parentView view:(UIView*)view {
+- (id)initWithParentView:(UIView*)parentView view:(UIView*)view  {
     if (self = [self initWithFrame:CGRectMake(0, 0, parentView.width, parentView.height)]) {
         [self addSubview:view];
         _contentView = view;
@@ -199,6 +203,7 @@ typedef void (^RNBlurCompletion)(void);
         _contentView.clipsToBounds = YES;
         _contentView.layer.masksToBounds = YES;
         
+
         _dismissButton.center = CGPointMake(view.left, view.top);
         [self addSubview:_dismissButton];
     }
@@ -379,8 +384,16 @@ typedef void (^RNBlurCompletion)(void);
     }
 }
 
--(void)hideCloseButton:(BOOL)hide {
+- (void)hideCloseButton:(BOOL)hide {
     [_dismissButton setHidden:hide];
+}
+
+- (void)touchAnywhereToClose:(BOOL)touch {
+    if (touch) {
+        [_contentView.superview addGestureRecognizer:_tapGesture];
+    } else {
+        [_contentView.superview removeGestureRecognizer:_tapGesture];
+    }
 }
 
 @end
