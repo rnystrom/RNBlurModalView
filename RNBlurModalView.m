@@ -388,8 +388,8 @@ typedef void (^RNBlurCompletion)(void);
     [_dismissButton setHidden:hide];
 }
 
-- (void)touchAnywhereToClose:(BOOL)touch {
-    if (touch) {
+- (void)tapAnywhereToClose:(BOOL)tap {
+    if (tap) {
         [_contentView.superview addGestureRecognizer:_tapGesture];
     } else {
         [_contentView.superview removeGestureRecognizer:_tapGesture];
