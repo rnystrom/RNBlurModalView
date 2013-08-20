@@ -29,7 +29,7 @@
 extern NSString * const kRNBlurDidShowNotification;
 extern NSString * const kRNBlurDidHidewNotification;
 
-@interface RNBlurModalView : UIView
+@interface RNBlurModalView : UIView <UIGestureRecognizerDelegate>
 
 @property (assign, readonly) BOOL isVisible;
 
@@ -52,7 +52,7 @@ extern NSString * const kRNBlurDidHidewNotification;
 - (void)hide;
 - (void)hideWithDuration:(CGFloat)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options completion:(void (^)(void))completion;
 
--(void)hideCloseButton:(BOOL)hide;
-
+- (void)hideCloseButton:(BOOL)hide;
+- (void)tapAnywhereToClose:(BOOL)touch;
 
 @end
