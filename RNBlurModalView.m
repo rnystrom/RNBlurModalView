@@ -605,7 +605,11 @@ typedef void (^RNBlurCompletion)(void);
 
 - (UIImage*)screenshot {
     UIGraphicsBeginImageContext(self.bounds.size);
-    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    if( [self respondsToSelector:@selector(drawViewHierarchyInRect:afterScreenUpdates:)] ){
+        [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+    }else{
+        [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    }
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
