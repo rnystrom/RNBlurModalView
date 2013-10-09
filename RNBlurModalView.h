@@ -29,6 +29,19 @@
 extern NSString * const kRNBlurDidShowNotification;
 extern NSString * const kRNBlurDidHidewNotification;
 
+/**
+ * Enum for the alignment of the content.
+ * The view can be aligned to the borders (top, bottom, left or right),
+ * or can be centered (horizontally or vertically, or both)
+ */
+typedef NS_ENUM(NSUInteger, RNBlurModalViewAlignment){
+    RNBlurModalViewAlignmentLeft        = 0,
+    RNBlurModalViewAlignmentTop         = 0,
+    RNBlurModalViewAlignmentCenter      = 1,
+    RNBlurModalViewAlignmentRight       = 2,
+    RNBlurModalViewAlignmentBottom      = 2,
+};
+
 @interface RNBlurModalView : UIView
 
 @property (assign, readonly) BOOL isVisible;
@@ -38,6 +51,16 @@ extern NSString * const kRNBlurDidHidewNotification;
 @property (assign) UIViewAnimationOptions animationOptions;
 @property (assign) BOOL dismissButtonRight;
 @property (nonatomic, copy) void (^defaultHideBlock)(void);
+/** Alignment of the content view (left, center or right) */
+@property (assign, nonatomic) RNBlurModalViewAlignment horizontalAlignment;
+/** Alignment of the content view (top, center or bottom) */
+@property (assign, nonatomic) RNBlurModalViewAlignment verticalAlignment;
+/** Space between the content view and the screen border.
+ * if horizontalAlignment == NSBlurModalViewAlignmentCenter it will be ignored */
+@property (assign, nonatomic) CGFloat horizontalSpacing;
+/** Space between the content view and the screen border.
+ * if VerticalAlignment == NSBlurModalViewAlignmentCenter it will be ignored */
+@property (assign, nonatomic) CGFloat verticalSpacing;
 
 - (id)initWithViewController:(UIViewController*)viewController view:(UIView*)view;
 - (id)initWithViewController:(UIViewController*)viewController title:(NSString*)title message:(NSString*)message;
