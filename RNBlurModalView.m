@@ -379,7 +379,11 @@ typedef void (^RNBlurCompletion)(void);
     }
 }
 
--(void)hideCloseButton:(BOOL)hide {
+- (void)moveCloseButton:(CGPoint)point {
+    _dismissButton.frame = CGRectMake(point.x, point.y, _dismissButton.frame.size.width, _dismissButton.frame.size.height);
+}
+
+- (void)hideCloseButton:(BOOL)hide {
     [_dismissButton setHidden:hide];
 }
 
