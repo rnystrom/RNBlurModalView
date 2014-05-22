@@ -93,6 +93,11 @@ typedef void (^RNBlurCompletion)(void);
     RNBlurCompletion _completion;
 }
 
+@synthesize horizontalAlignment = _horizontalAlignment;
+@synthesize verticalAlignment   = _verticalAlignment;
+@synthesize horizontalSpacing   = _horizontalSpacing;
+@synthesize verticalSpacing     = _verticalSpacing;
+
 + (UIView*)generateModalViewWithTitle:(NSString*)title message:(NSString*)message {
     CGFloat defaultWidth = 280.f;
     CGRect frame = CGRectMake(0, 0, defaultWidth, 0);
@@ -139,6 +144,25 @@ typedef void (^RNBlurCompletion)(void);
     return view;
 }
 
+- (void)setHorizontalAlignment:(RNBlurModalViewAlignment)horizontalAlignment {
+    _horizontalAlignment = horizontalAlignment;
+    _contentView.center = [self getContentViewCenter];
+}
+
+- (void)setVerticalAlignment:(RNBlurModalViewAlignment)verticalAlignment {
+    _verticalAlignment = verticalAlignment;
+    _contentView.center = [self getContentViewCenter];
+}
+
+- (void)setHorizontalSpacing:(CGFloat)horizontalSpacing {
+    _horizontalSpacing = horizontalSpacing;
+    _contentView.center = [self getContentViewCenter];
+}
+
+- (void)setVerticalSpacing:(CGFloat)verticalSpacing {
+    _verticalSpacing = verticalSpacing;
+    _contentView.center = [self getContentViewCenter];
+}
 
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -156,6 +180,10 @@ typedef void (^RNBlurCompletion)(void);
                                   UIViewAutoresizingFlexibleHeight |
                                   UIViewAutoresizingFlexibleLeftMargin |
                                   UIViewAutoresizingFlexibleTopMargin);
+        // Center the view:
+        self.horizontalAlignment = RNBlurModalViewAlignmentCenter;
+        self.verticalAlignment = RNBlurModalViewAlignmentCenter;
+        self.horizontalSpacing = self.verticalSpacing = 20.0f;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChangeNotification:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
     }
@@ -168,7 +196,7 @@ typedef void (^RNBlurCompletion)(void);
     if (self = [self initWithFrame:CGRectMake(0, 0, viewController.view.width, viewController.view.height)]) {
         [self addSubview:view];
         _contentView = view;
-        _contentView.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        _contentView.center = [self getContentViewCenter];
         _controller = viewController;
         _parentView = nil;
         _contentView.clipsToBounds = YES;
@@ -193,7 +221,7 @@ typedef void (^RNBlurCompletion)(void);
     if (self = [self initWithFrame:CGRectMake(0, 0, parentView.width, parentView.height)]) {
         [self addSubview:view];
         _contentView = view;
-        _contentView.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        _contentView.center = [self getContentViewCenter];
         _controller = nil;
         _parentView = parentView;
         _contentView.clipsToBounds = YES;
@@ -236,6 +264,38 @@ typedef void (^RNBlurCompletion)(void);
     _dismissButton.center = CGPointMake(centerX, _contentView.top);
 }
 
+- (CGPoint)getContentViewCenter {
+    CGFloat x = 0.0f, y=0.0f;
+    CGFloat w = _contentView.frame.size.width;
+    CGFloat h = _contentView.frame.size.height;
+    // Horizontal position
+    switch (self.horizontalAlignment){
+        case RNBlurModalViewAlignmentLeft:
+            x = CGRectGetMinX(self.frame) + w/2 + self.horizontalSpacing;
+            break;
+        case RNBlurModalViewAlignmentRight:
+            x = CGRectGetMaxX(self.frame) - w/2 - self.horizontalSpacing;
+            break;
+        case RNBlurModalViewAlignmentCenter:
+            x = CGRectGetMidX(self.frame);
+            break;
+    }
+    // Vertical position
+    switch (self.verticalAlignment){
+        case RNBlurModalViewAlignmentTop:
+            y = CGRectGetMinY(self.frame) + h/2 + self.verticalSpacing;
+            break;
+        case RNBlurModalViewAlignmentBottom:
+            y = CGRectGetMaxY(self.frame) - h/2 - self.verticalSpacing;
+            break;
+        case RNBlurModalViewAlignmentCenter:
+            y = CGRectGetMidY(self.frame);
+            break;
+    }
+    CGPoint center = CGPointMake(x, y);
+    return center;
+}
+
 - (void)willMoveToSuperview:(UIView *)newSuperview {
     [super willMoveToSuperview:newSuperview];
     if (newSuperview) {
@@ -273,7 +333,7 @@ typedef void (^RNBlurCompletion)(void);
     
     self.hidden = NO;
 
-    _contentView.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    _contentView.center = [self getContentViewCenter];
     _dismissButton.center = _contentView.origin;
 }
 
