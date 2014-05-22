@@ -26,10 +26,16 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
+extern CGFloat kRNBlurDefaultDelay;
+extern CGFloat kRNDefaultBlurScale;
+extern CGFloat kRNBlurDefaultDuration;
+extern CGFloat kRNBlurViewMaxAlpha;
+extern CGFloat kRNBlurBounceOutDurationScale;
+
 extern NSString * const kRNBlurDidShowNotification;
 extern NSString * const kRNBlurDidHidewNotification;
 
-@interface RNBlurModalView : UIView
+@interface RNBlurModalView : UIView <UIGestureRecognizerDelegate>
 
 @property (assign, readonly) BOOL isVisible;
 
@@ -37,7 +43,13 @@ extern NSString * const kRNBlurDidHidewNotification;
 @property (assign) CGFloat animationDelay;
 @property (assign) UIViewAnimationOptions animationOptions;
 @property (assign) BOOL dismissButtonRight;
+@property (nonatomic) BOOL tapOutsideToDismiss;
 @property (nonatomic, copy) void (^defaultHideBlock)(void);
+@property (assign) CGFloat offsetX;
+@property (assign) CGFloat offsetY;
+@property (nonatomic, assign) CGAffineTransform startTransform;
+@property (nonatomic, assign) CGAffineTransform endTransform;
+
 
 - (id)initWithViewController:(UIViewController*)viewController view:(UIView*)view;
 - (id)initWithViewController:(UIViewController*)viewController title:(NSString*)title message:(NSString*)message;

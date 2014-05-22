@@ -31,17 +31,17 @@
     This bit is important! In order to prevent capturing selected states of UIResponders I've implemented a delay. Please feel free to set this delay to *whatever* you deem apprpriate.
     I've defaulted it to 0.125 seconds. You can do shorter/longer as you see fit. 
  */
-CGFloat const kRNBlurDefaultDelay = 0.125f;
+CGFloat kRNBlurDefaultDelay = 0.125f;
 
 /*
     You can also change this constant to make the blur more "blurry". I recommend the tasteful level of 0.2 and no higher. However, you are free to change this from 0.0 to 1.0.
  */
-CGFloat const kRNDefaultBlurScale = 0.2f;
+CGFloat kRNDefaultBlurScale = 0.2f;
 
-CGFloat const kRNBlurDefaultDuration = 0.2f;
-CGFloat const kRNBlurViewMaxAlpha = 1.f;
+CGFloat kRNBlurDefaultDuration = 0.2f;
+CGFloat kRNBlurViewMaxAlpha = 1.f;
 
-CGFloat const kRNBlurBounceOutDurationScale = 0.8f;
+CGFloat kRNBlurBounceOutDurationScale = 0.8f;
 
 NSString * const kRNBlurDidShowNotification = @"com.whoisryannystrom.RNBlurModalView.show";
 NSString * const kRNBlurDidHidewNotification = @"com.whoisryannystrom.RNBlurModalView.hide";
@@ -139,12 +139,13 @@ typedef void (^RNBlurCompletion)(void);
     return view;
 }
 
-
 - (id)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         _dismissButton = [[RNCloseButton alloc] init];
         _dismissButton.center = CGPointZero;
         [_dismissButton addTarget:self action:@selector(hide) forControlEvents:UIControlEventTouchUpInside];
+        
+        self.tapOutsideToDismiss = YES;
         
         self.alpha = 0.f;
         self.backgroundColor = [UIColor clearColor];
@@ -158,6 +159,14 @@ typedef void (^RNBlurCompletion)(void);
                                   UIViewAutoresizingFlexibleTopMargin);
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationDidChangeNotification:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+                
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+        [singleTap setDelegate:self];
+        [singleTap setNumberOfTapsRequired:1];
+        [self addGestureRecognizer:singleTap];
+        
+        self.startTransform = CGAffineTransformScale(CGAffineTransformIdentity, 0.4, 0.4);
+        self.endTransform = CGAffineTransformScale(CGAffineTransformIdentity, 1.f, 1.f);
     }
     return self;
 }
@@ -168,7 +177,7 @@ typedef void (^RNBlurCompletion)(void);
     if (self = [self initWithFrame:CGRectMake(0, 0, viewController.view.width, viewController.view.height)]) {
         [self addSubview:view];
         _contentView = view;
-        _contentView.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        _contentView.center = CGPointMake(CGRectGetMidX(self.frame) - self.offsetX, CGRectGetMidY(self.frame) - self.offsetY);
         _controller = viewController;
         _parentView = nil;
         _contentView.clipsToBounds = YES;
@@ -193,7 +202,7 @@ typedef void (^RNBlurCompletion)(void);
     if (self = [self initWithFrame:CGRectMake(0, 0, parentView.width, parentView.height)]) {
         [self addSubview:view];
         _contentView = view;
-        _contentView.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        _contentView.center = CGPointMake(CGRectGetMidX(self.frame) - self.offsetX, CGRectGetMidY(self.frame) - self.offsetY);
         _controller = nil;
         _parentView = parentView;
         _contentView.clipsToBounds = YES;
@@ -272,8 +281,8 @@ typedef void (^RNBlurCompletion)(void);
     
     
     self.hidden = NO;
-
-    _contentView.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+    
+    _contentView.center = CGPointMake(CGRectGetMidX(self.frame) - self.offsetX, CGRectGetMidY(self.frame) - self.offsetY);
     _dismissButton.center = _contentView.origin;
 }
 
@@ -328,8 +337,12 @@ typedef void (^RNBlurCompletion)(void);
 
             [_parentView insertSubview:_blurView belowSubview:self];
         }
+                
+        _contentView.center = CGPointMake(CGRectGetMidX(self.frame) - self.offsetX, CGRectGetMidY(self.frame) - self.offsetY);
+        _dismissButton.center = _contentView.origin;
         
-        self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.4, 0.4);
+       self.transform = self.startTransform;
+        
         [UIView animateWithDuration:self.animationDuration animations:^{
             _blurView.alpha = 1.f;
             self.alpha = 1.f;
@@ -362,6 +375,7 @@ typedef void (^RNBlurCompletion)(void);
                          animations:^{
                              self.alpha = 0.f;
                              _blurView.alpha = 0.f;
+                             self.transform = self.endTransform;
                          }
                          completion:^(BOOL finished){
                              if (finished) {
@@ -381,6 +395,16 @@ typedef void (^RNBlurCompletion)(void);
 
 -(void)hideCloseButton:(BOOL)hide {
     [_dismissButton setHidden:hide];
+}
+
+-(void) handleTap:(UITapGestureRecognizer *) recognizer {
+    if(self.tapOutsideToDismiss){
+        [self hide];
+    }
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    return !(touch.view == _contentView || touch.view == _dismissButton);
 }
 
 @end
