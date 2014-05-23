@@ -28,7 +28,7 @@ Additionally in your project, under the Build Phases tab, expand Compile Sources
 The simplest way to get up and running with RNBlurModalView is to display a default view. Inside of your view controller, write the following code:
 
 ``` objective-c
-RNBlurModalView *modal = [[RNBlurModalView alloc] initWithViewController:self title:@"Hello world!" message:@"Pur your message here."];
+RNBlurModalView *modal = [[RNBlurModalView alloc] initWithViewController:self title:@"Hello world!" message:@"Put your message here."];
 [modal show];
 ```
 
