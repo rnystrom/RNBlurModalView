@@ -134,8 +134,6 @@ typedef void (^RNBlurCompletion)(void);
     
     view.height = messageLabel.bottom + padding;
     
-    view.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
-    
     return view;
 }
 
@@ -168,7 +166,7 @@ typedef void (^RNBlurCompletion)(void);
     if (self = [self initWithFrame:CGRectMake(0, 0, viewController.view.width, viewController.view.height)]) {
         [self addSubview:view];
         _contentView = view;
-        _contentView.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        _contentView.center = CGPointMake(CGRectGetMidX(viewController.view.bounds), CGRectGetMidY(viewController.view.bounds));
         _controller = viewController;
         _parentView = nil;
         _contentView.clipsToBounds = YES;
@@ -193,7 +191,7 @@ typedef void (^RNBlurCompletion)(void);
     if (self = [self initWithFrame:CGRectMake(0, 0, parentView.width, parentView.height)]) {
         [self addSubview:view];
         _contentView = view;
-        _contentView.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
+        _contentView.center = CGPointMake(CGRectGetMidX(parentView.bounds), CGRectGetMidY(parentView.bounds));
         _controller = nil;
         _parentView = parentView;
         _contentView.clipsToBounds = YES;
