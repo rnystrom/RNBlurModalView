@@ -407,10 +407,28 @@ typedef void (^RNBlurCompletion)(void);
 
 @implementation UILabel (AutoSize)
 
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
 - (void)autoHeight {
     CGRect frame = self.frame;
     CGSize maxSize = CGSizeMake(frame.size.width, 9999);
-    CGSize expectedSize = [self.text sizeWithFont:self.font constrainedToSize:maxSize lineBreakMode:self.lineBreakMode];
+    CGSize expectedSize;
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
+
+        CGRect textRect = [self.text boundingRectWithSize:maxSize
+                                         options:NSStringDrawingUsesLineFragmentOrigin
+                                      attributes:@{NSFontAttributeName:self.font}
+                                         context:nil];
+        expectedSize = textRect.size;
+    } else {
+
+// supress warning as we're using conditional code
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
+        expectedSize = [self.text sizeWithFont:self.font constrainedToSize:maxSize lineBreakMode:self.lineBreakMode];
+    }
+    
     frame.size.height = expectedSize.height;
     [self setFrame:frame];
 }
@@ -697,7 +715,7 @@ typedef void (^RNBlurCompletion)(void);
     //clean up
     CGContextRelease(ctx);
     CGColorSpaceRelease(colorSpace);
-    free(pixelBuffer2)
+    free(pixelBuffer2);
     free(pixelBuffer);
     CFRelease(inBitmapData);
     
